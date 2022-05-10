@@ -1,58 +1,26 @@
 import {
     Scene,
-    PerspectiveCamera,
-    WebGLRenderer,
     Mesh,
     CylinderBufferGeometry,
     MeshStandardMaterial,
-    DirectionalLight,
-    AmbientLight,
+
 
 } from 'three';
+import { setupCamera } from './setupCamera';
+import { setupLights } from './setupLights';
+import { setupRenderer } from './setupRenderer';
 
 export function setupThreeJSScene() {
 
-    function getAspect() {
-        return wWidth / wHeight;
-    }
+    let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
 
-    let wWidth: number = window.innerWidth;
-    let wHeight: number = window.innerHeight;
+    const camera = setupCamera(dim);
+
+    const renderer = setupRenderer(camera, dim);
 
     let scene = new Scene();
 
-    //camera
-    let camera: PerspectiveCamera = new PerspectiveCamera(75, getAspect(), 0.1, 1000);
-    camera.position.z = 50;
-
-    //renderer
-
-    let renderer: WebGLRenderer = new WebGLRenderer();
-    renderer.setSize(wWidth, wHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // add Events Global
-    //TODO: fixup
-    window.addEventListener('resize', onWindowResize, false);
-    function onWindowResize() {
-        wWidth = window.innerWidth;
-        wHeight = window.innerHeight;
-
-        camera.aspect = getAspect();
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(wWidth, wHeight);
-    }
-
-
-    //lights
-    const dirLight1 = new DirectionalLight();
-    scene.add(dirLight1);
-    const dirLight2 = new DirectionalLight();
-    dirLight2.position.set(-5, 2, -2);
-    scene.add(dirLight2);
-    const light = new AmbientLight(0x404040); // soft white light
-    scene.add(light);
+    setupLights(scene);
 
     //shape(s)
     const geometry = new CylinderBufferGeometry(5, 5, 20, 8);
@@ -64,7 +32,9 @@ export function setupThreeJSScene() {
     myShape.position.z = 5;
     scene.add(myShape);
 
+
     animate();
+
 
     function animate() {
         myShape.rotation.y += 0.01;

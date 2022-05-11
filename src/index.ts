@@ -3,6 +3,8 @@ import {
     Mesh,
     CylinderBufferGeometry,
     MeshStandardMaterial,
+    AxesHelper,
+    GridHelper,
 
 
 } from 'three';
@@ -10,7 +12,12 @@ import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
-
+function setupHelpers(scene: Scene) {
+    const axesHelper = new AxesHelper(5);
+    scene.add(axesHelper);
+    const gridHelper = new GridHelper(5);
+    scene.add(gridHelper);
+}
 export function setupThreeJSScene() {
 
     let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
@@ -24,6 +31,8 @@ export function setupThreeJSScene() {
     let scene = new Scene();
 
     setupLights(scene);
+
+    setupHelpers(scene);
 
     //shape(s)
     const geometry = new CylinderBufferGeometry(5, 5, 20, 8);

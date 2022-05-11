@@ -6,8 +6,6 @@ import {
     Color,
     AxesHelper,
     GridHelper,
-
-
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
@@ -59,9 +57,10 @@ export function setupThreeJSScene() {
         });
 
         let myShape: Mesh = new Mesh(geometry, material);
-        myShape.position.random()
-        myShape.position.multiplyScalar(40);
-
+        const x = -20 + Math.random() * 40;
+        const y = -20 + Math.random() * 40;
+        const z = -20 + Math.random() * 40;
+        myShape.position.set(x, y, z);
 
         scene.add(myShape);
     }

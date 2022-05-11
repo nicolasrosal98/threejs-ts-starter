@@ -1,8 +1,8 @@
 import {
     Scene,
     Mesh,
-    CylinderBufferGeometry,
     MeshStandardMaterial,
+    BoxBufferGeometry,
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
@@ -27,13 +27,13 @@ export function setupThreeJSScene() {
     setupHelpers(scene);
 
     //shape(s)
-    const geometry = new CylinderBufferGeometry(5, 5, 20, 8);
+    const geometry = new BoxBufferGeometry(10, 10, 10);
     const material = new MeshStandardMaterial({
         color: 0xff00ff
     });
 
     let myShape: Mesh = new Mesh(geometry, material);
-    myShape.position.z = 5;
+    myShape.position.y = 20;
     scene.add(myShape);
 
 

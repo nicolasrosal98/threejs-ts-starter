@@ -3,21 +3,13 @@ import {
     Mesh,
     CylinderBufferGeometry,
     MeshStandardMaterial,
-    AxesHelper,
-    GridHelper,
-
-
 } from 'three';
 import { setupCamera } from './setupCamera';
+import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
-function setupHelpers(scene: Scene) {
-    const axesHelper = new AxesHelper(10);
-    scene.add(axesHelper);
-    const gridHelper = new GridHelper(100);
-    scene.add(gridHelper);
-}
+
 export function setupThreeJSScene() {
 
     let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };

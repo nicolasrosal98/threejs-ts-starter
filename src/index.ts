@@ -14,11 +14,11 @@ import { setupRenderer } from './setupRenderer';
 
 export async function setupThreeJSScene() {
 
-    let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
+    let dimensions = { w: window.innerWidth, h: window.innerHeight };
 
-    const camera = setupCamera(dim);
+    const camera = setupCamera(dimensions);
 
-    const renderer = setupRenderer(camera, dim);
+    const renderer = setupRenderer(camera, dimensions);
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 

@@ -1,27 +1,12 @@
-import {
-    Scene,
-    Mesh,
-    MeshStandardMaterial,
-    BoxBufferGeometry,
-    Color,
-} from 'three';
+import { Scene } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
-import { pick } from './randomUtils';
+import { setupShapeCluster } from './setupShapeCluster';
 
 export function setupThreeJSScene() {
-
-    //From https://nice-colours-quicker.netlify.app/
-    const palette = [
-        "#00a0b0",
-        "#6a4a3c",
-        "#cc333f",
-        "#eb6841",
-        "#edc951"
-    ];
 
     let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
 
@@ -37,28 +22,12 @@ export function setupThreeJSScene() {
 
     setupHelpers(scene);
 
-    //shape(s)
-    for (let i = 0; i < 40; i++) {
-        const w = 8 + Math.random() * 8;
-        const h = 8 + Math.random() * 8;
-        const d = 8 + Math.random() * 8;
+    setupShapeCluster(scene);
 
-
-        const geometry = new BoxBufferGeometry(w, h, d);
-        const material = new MeshStandardMaterial({
-            color: new Color(pick(palette))
-        });
-
-        let myShape: Mesh = new Mesh(geometry, material);
-        const x = -20 + Math.random() * 40;
-        const y = -20 + Math.random() * 40;
-        const z = -20 + Math.random() * 40;
-        myShape.position.set(x, y, z);
-
-        scene.add(myShape);
-    }
+    setupKeyHandlers(renderer.domElement);
 
     animate();
+
 
 
     function animate() {
@@ -69,6 +38,16 @@ export function setupThreeJSScene() {
         controls.update();
 
         requestAnimationFrame(animate);
+    }
+
+    function setupKeyHandlers(elem: HTMLElement) {
+
+        function handleKeyDown(event: KeyboardEvent) {
+            if (event.key === "r") {
+                controls.autoRotate = !controls.autoRotate;
+            }
+        }
+        document.addEventListener("keydown", handleKeyDown);
     }
 }
 

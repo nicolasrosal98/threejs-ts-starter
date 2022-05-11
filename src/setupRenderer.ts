@@ -2,7 +2,7 @@ import { PerspectiveCamera, WebGLRenderer } from "three";
 
 export function setupRenderer(camera: PerspectiveCamera, dim: { w: number, h: number }) {
 
-    let renderer: WebGLRenderer = new WebGLRenderer();
+    let renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
     renderer.setSize(dim.w, dim.h);
     document.body.appendChild(renderer.domElement);
 

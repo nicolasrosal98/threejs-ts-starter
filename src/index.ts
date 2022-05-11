@@ -38,10 +38,10 @@ export function setupThreeJSScene() {
     setupHelpers(scene);
 
     //shape(s)
-    for (let i = 0; i < 100; i++) {
-        const w = 5 + Math.random() * 5;
-        const h = 5 + Math.random() * 5;
-        const d = 5 + Math.random() * 5;
+    for (let i = 0; i < 40; i++) {
+        const w = 8 + Math.random() * 8;
+        const h = 8 + Math.random() * 8;
+        const d = 8 + Math.random() * 8;
 
 
         const geometry = new BoxBufferGeometry(w, h, d);

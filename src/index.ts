@@ -3,13 +3,24 @@ import {
     Mesh,
     MeshStandardMaterial,
     BoxBufferGeometry,
+    Color,
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
+import { pick } from './randomUtils';
 
 export function setupThreeJSScene() {
+
+    //From https://nice-colours-quicker.netlify.app/
+    const palette = [
+        "#00a0b0",
+        "#6a4a3c",
+        "#cc333f",
+        "#eb6841",
+        "#edc951"
+    ];
 
     let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
 
@@ -25,14 +36,19 @@ export function setupThreeJSScene() {
 
     //shape(s)
     for (let i = 0; i < 100; i++) {
-        const geometry = new BoxBufferGeometry(2, 10, 2);
+        const w = 5 + Math.random() * 5;
+        const h = 5 + Math.random() * 5;
+        const d = 5 + Math.random() * 5;
+
+
+        const geometry = new BoxBufferGeometry(w, h, d);
         const material = new MeshStandardMaterial({
-            color: Math.random() * Math.pow(2, 24)
+            color: new Color(pick(palette))
         });
 
         let myShape: Mesh = new Mesh(geometry, material);
         myShape.position.random()
-        myShape.position.multiplyScalar(100);
+        myShape.position.multiplyScalar(40);
 
 
         scene.add(myShape);

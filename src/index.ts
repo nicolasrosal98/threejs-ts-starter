@@ -1,10 +1,8 @@
 import {
     Scene,
     Mesh,
-    CylinderBufferGeometry,
     MeshStandardMaterial,
-
-
+    BoxBufferGeometry,
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
@@ -26,22 +24,24 @@ export function setupThreeJSScene() {
     setupLights(scene);
 
     //shape(s)
-    const geometry = new CylinderBufferGeometry(5, 5, 20, 8);
-    const material = new MeshStandardMaterial({
-        color: 0xff00ff
-    });
+    for (let i = 0; i < 100; i++) {
+        const geometry = new BoxBufferGeometry(2, 10, 2);
+        const material = new MeshStandardMaterial({
+            color: Math.random() * Math.pow(2, 24)
+        });
 
-    let myShape: Mesh = new Mesh(geometry, material);
-    myShape.position.z = 5;
-    scene.add(myShape);
+        let myShape: Mesh = new Mesh(geometry, material);
+        myShape.position.random()
+        myShape.position.multiplyScalar(100);
 
+
+        scene.add(myShape);
+    }
 
     animate();
 
 
     function animate() {
-        myShape.rotation.y += 0.01;
-        myShape.rotation.x += 0.02;
 
         renderer.render(scene, camera);
 

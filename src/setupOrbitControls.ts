@@ -13,8 +13,8 @@ export function setupOrbitControls(camera: Camera, htmlElement: HTMLElement) {
     controls.enableDamping = true;
 
     //IF you change the camera transform manually (e.g. position, orientation) you MUST call controls.update() after.
-    camera.position.set(0, 20, 100);
-    controls.update();
+    // camera.position.set(0, 20, 100);
+    // controls.update();
 
     return controls;
 }

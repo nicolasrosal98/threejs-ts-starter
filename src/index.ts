@@ -1,8 +1,5 @@
 import {
     Scene,
-    Mesh,
-    MeshStandardMaterial,
-    BoxBufferGeometry,
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
@@ -13,12 +10,11 @@ import { setupTerrain } from './setupTerrain';
 
 export function setupThreeJSScene() {
 
+    let dimensions = { w: window.innerWidth, h: window.innerHeight };
 
-    let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
+    const camera = setupCamera(dimensions);
 
-    const camera = setupCamera(dim);
-
-    const renderer = setupRenderer(camera, dim);
+    const renderer = setupRenderer(camera, dimensions);
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 

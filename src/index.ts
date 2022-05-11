@@ -61,9 +61,9 @@ export async function setupThreeJSScene() {
             submarine.position.setY(Math.sin(frameCount / 20));
         }
 
-        // required if controls.enableDamping or controls.autoRotate are set to true
-        controls.update();
+        controls.update(); // required if controls has .enableDamping .autoRotate set true.
 
+        document.getElementById("info")!.innerText = "z: " + Math.round(submarine!.position.z);
         requestAnimationFrame(animate);
         frameCount++;
     }

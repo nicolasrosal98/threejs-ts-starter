@@ -41,11 +41,14 @@ export async function setupThreeJSScene() {
 
     const submarine = await loadModel("./assets/lionSubmariners.glb");
     if (submarine) {
-        submarine.scale.set(3, 3, 3);
+        submarine.scale.set(5, 5, 5);
+        submarine.position.setZ(20);
         scene.add(submarine);
     }
-    animate();
 
+    let frameCount = 0;
+
+    animate();
 
     function animate() {
         myShape.rotation.y += 0.01;
@@ -53,10 +56,16 @@ export async function setupThreeJSScene() {
 
         renderer.render(scene, camera);
 
+        if (submarine) {
+            submarine.position.setZ(submarine.position.z -= 0.1)
+            submarine.position.setY(Math.sin(frameCount / 20));
+        }
+
         // required if controls.enableDamping or controls.autoRotate are set to true
         controls.update();
 
         requestAnimationFrame(animate);
+        frameCount++;
     }
 }
 

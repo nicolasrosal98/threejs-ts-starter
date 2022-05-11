@@ -8,6 +8,7 @@ import {
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
+import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 
 export function setupThreeJSScene() {
@@ -17,6 +18,8 @@ export function setupThreeJSScene() {
     const camera = setupCamera(dim);
 
     const renderer = setupRenderer(camera, dim);
+
+    const controls = setupOrbitControls(camera, renderer.domElement);
 
     let scene = new Scene();
 
@@ -41,6 +44,9 @@ export function setupThreeJSScene() {
         myShape.rotation.x += 0.02;
 
         renderer.render(scene, camera);
+
+        // required if controls.enableDamping or controls.autoRotate are set to true
+        controls.update();
 
         requestAnimationFrame(animate);
     }

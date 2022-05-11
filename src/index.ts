@@ -4,21 +4,14 @@ import {
     MeshStandardMaterial,
     BoxBufferGeometry,
     Color,
-    AxesHelper,
-    GridHelper,
 } from 'three';
 import { setupCamera } from './setupCamera';
+import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 import { pick } from './randomUtils';
 
-function setupHelpers(scene: Scene) {
-    const axesHelper = new AxesHelper(10);
-    scene.add(axesHelper);
-    const gridHelper = new GridHelper(100);
-    scene.add(gridHelper);
-}
 export function setupThreeJSScene() {
 
     //From https://nice-colours-quicker.netlify.app/

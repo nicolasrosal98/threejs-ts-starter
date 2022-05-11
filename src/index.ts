@@ -9,8 +9,10 @@ import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
+import { setupTerrain } from './setupTerrain';
 
 export function setupThreeJSScene() {
+
 
     let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
 
@@ -26,23 +28,12 @@ export function setupThreeJSScene() {
 
     setupHelpers(scene);
 
-    //shape(s)
-    const geometry = new BoxBufferGeometry(10, 10, 10);
-    const material = new MeshStandardMaterial({
-        color: 0xff00ff
-    });
-
-    let myShape: Mesh = new Mesh(geometry, material);
-    myShape.position.y = 20;
-    scene.add(myShape);
-
+    setupTerrain(scene);
 
     animate();
 
 
     function animate() {
-        myShape.rotation.y += 0.01;
-        myShape.rotation.x += 0.02;
 
         renderer.render(scene, camera);
 

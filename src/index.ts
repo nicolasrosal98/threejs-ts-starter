@@ -3,14 +3,16 @@ import {
     Mesh,
     MeshStandardMaterial,
     BoxBufferGeometry,
+    Vector3
 } from 'three';
+import { loadModel } from './loadModel';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 
-export function setupThreeJSScene() {
+export async function setupThreeJSScene() {
 
     let dim: { w: number, h: number } = { w: window.innerWidth, h: window.innerHeight };
 
@@ -37,6 +39,11 @@ export function setupThreeJSScene() {
     scene.add(myShape);
 
 
+    const submarine = await loadModel("./assets/lionSubmariners.glb");
+    if (submarine) {
+        submarine.scale.set(3, 3, 3);
+        scene.add(submarine);
+    }
     animate();
 
 

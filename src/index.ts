@@ -1,10 +1,4 @@
-import {
-    Scene,
-    Mesh,
-    MeshStandardMaterial,
-    BoxBufferGeometry,
-    Vector3
-} from 'three';
+import { Scene } from 'three';
 import { loadModel } from './loadModel';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
@@ -28,17 +22,7 @@ export async function setupThreeJSScene() {
 
     setupHelpers(scene);
 
-    //shape(s)
-    const geometry = new BoxBufferGeometry(10, 10, 10);
-    const material = new MeshStandardMaterial({
-        color: 0xff00ff
-    });
-
-    let myShape: Mesh = new Mesh(geometry, material);
-    myShape.position.y = 20;
-    scene.add(myShape);
-
-
+    //Load a model of a submarine and add it to the scene!
     const submarine = await loadModel("./assets/lionSubmariners.glb");
     if (submarine) {
         submarine.scale.set(5, 5, 5);
@@ -46,14 +30,12 @@ export async function setupThreeJSScene() {
         scene.add(submarine);
     }
 
+    //keep a frame counter so we can use it as an input to an animation
     let frameCount = 0;
 
     animate();
 
     function animate() {
-        myShape.rotation.y += 0.01;
-        myShape.rotation.x += 0.02;
-
         renderer.render(scene, camera);
 
         if (submarine) {

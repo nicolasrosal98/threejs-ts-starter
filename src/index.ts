@@ -3,6 +3,7 @@ import {
     Mesh,
     MeshStandardMaterial,
     BoxBufferGeometry,
+    Vector3,
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
@@ -33,19 +34,22 @@ export function setupThreeJSScene() {
     });
 
     let myShape: Mesh = new Mesh(geometry, material);
+
+    let destinationPosition: Vector3 = new Vector3(0, 0, 0);
     myShape.position.y = 20;
     scene.add(myShape);
 
     setupAccelerometer((acl) => {
-        myShape.position.setX((acl.x || 0) * 1);
-        myShape.position.setY((acl.y || 0) * 1);
-        myShape.position.setZ((acl.z || 0) * 1);
+        destinationPosition = new Vector3((acl.x || 0), (acl.y || 0), (acl.z || 0));
     });
     animate();
 
     function animate() {
         myShape.rotation.y += 0.01;
         myShape.rotation.x += 0.02;
+
+        //move a 1/10th of the way towards destinationPosition - smooths out the movement.
+        myShape.position.lerp(destinationPosition, 0.1);
 
         renderer.render(scene, camera);
 

@@ -25,3 +25,15 @@ then open [http://localhost:1234](http://localhost:1234) in your browser.
 ```
 yarn run build
 ```
+
+## 3d models
+
+- Put 3d models in `assets/` directory.
+- refer to them with an `./assets` prefix
+
+Example:
+
+```typescript
+const myModel = await loadModel("./assets/rainbow.glb");
+scene.add(myModel);
+```

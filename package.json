@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "CC-BY-NC-ND-4.0",
   "dependencies": {
+    "@types/w3c-generic-sensor": "^1.0.5",
     "parcel-plugin-static-files-copy": "^2.6.0",
     "three": "^0.140.0"
   },

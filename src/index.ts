@@ -4,6 +4,7 @@ import {
     MeshStandardMaterial,
     BoxBufferGeometry,
     Vector3,
+    Color,
 } from 'three';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
@@ -30,7 +31,7 @@ export function setupThreeJSScene() {
     //shape(s)
     const geometry = new BoxBufferGeometry(10, 10, 10);
     const material = new MeshStandardMaterial({
-        color: 0xffff00
+        color: new Color("red")
     });
 
     let myShape: Mesh = new Mesh(geometry, material);
@@ -40,8 +41,12 @@ export function setupThreeJSScene() {
     scene.add(myShape);
 
     setupAccelerometer((acl) => {
-        destinationPosition = new Vector3((acl.x || 0), (acl.y || 0), (acl.z || 0));
+        if (acl.x === undefined || acl.y === undefined || acl.z === undefined) {
+            return;
+        }
+        destinationPosition = new Vector3(acl.x, acl.y, acl.z).multiplyScalar(3);
     });
+
     animate();
 
     function animate() {

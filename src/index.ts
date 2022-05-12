@@ -30,6 +30,8 @@ export async function setupThreeJSScene() {
         scene.add(submarine);
     }
 
+    //You can get more models from https://market.pmnd.rs/
+
     //keep a frame counter so we can use it as an input to an animation
     let frameCount = 0;
 

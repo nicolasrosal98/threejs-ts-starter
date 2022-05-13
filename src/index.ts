@@ -22,12 +22,12 @@ export async function setupThreeJSScene() {
 
     setupHelpers(scene);
 
-    //Load a model of a submarine and add it to the scene!
-    const submarine = await loadModel("./assets/lionSubmariners.glb");
-    if (submarine) {
-        submarine.scale.set(5, 5, 5);
-        submarine.position.setZ(20);
-        scene.add(submarine);
+
+    const treesAndHouse = await loadModel("./assets/treesAndHouse.glb");
+    if (treesAndHouse) {
+        treesAndHouse.scale.set(5, 5, 5);
+        treesAndHouse.position.setX(50);
+        scene.add(treesAndHouse);
     }
 
     //You can get more models from https://market.pmnd.rs/
@@ -40,14 +40,9 @@ export async function setupThreeJSScene() {
     function animate() {
         renderer.render(scene, camera);
 
-        if (submarine) {
-            submarine.position.setZ(submarine.position.z -= 0.1)
-            submarine.position.setY(Math.sin(frameCount / 20));
-        }
-
         controls.update(); // required if controls has .enableDamping .autoRotate set true.
 
-        document.getElementById("info")!.innerText = "z: " + Math.round(submarine!.position.z);
+        // document.getElementById("info")!.innerText = "z: " + Math.round(submarine!.position.z);
         requestAnimationFrame(animate);
         frameCount++;
     }

@@ -1,27 +1,9 @@
-Example App using Three.js and Typescript bundled with parcel 🚀🔥.
+# Minimal example using Three.js (without typescript or the Parcel bunder)
 
-Modified from Alberto Adrián Pucheta's repo: https://github.com/adrianrey05/parcel-typescript-threejs
+### To start dev:
 
-And Academy's node.js typescript starter project.
+Right click on index.html and choose "open with live server"
 
-## Install
+### To deploy:
 
-```
-yarn
-```
-
-## Run
-
-in dev mode:
-
-```
-yarn run start
-```
-
-then open [http://localhost:1234](http://localhost:1234) in your browser.
-
-## Build
-
-```
-yarn run build
-```
+Deploy the contents of the src folder to a host such as netlify.

@@ -25,3 +25,9 @@ then open [http://localhost:1234](http://localhost:1234) in your browser.
 ```
 yarn run build
 ```
+
+## Credits
+
+Includes Sound Tight Beat_95bpm by NenadSimic from https://freesound.org/people/NenadSimic/sounds/138142/
+
+This work is licensed under the Attribution 3.0 License.

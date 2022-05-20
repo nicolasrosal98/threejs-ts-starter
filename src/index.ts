@@ -40,7 +40,7 @@ export function setupThreeJSScene() {
     renderer.domElement.addEventListener("click", once(() => audioAnalyser = setupAudioAnalyser(camera, { numBands: numEqBands })));
 
 
-    //shape(s)
+    //shape(s) make a lot of little cubes, one for each band of the EQ visualiser.
     const geometry = new BoxBufferGeometry(1, 1, 1);
     const material = new MeshStandardMaterial({
         color: 0xff00ff
@@ -53,21 +53,23 @@ export function setupThreeJSScene() {
         scene.add(myShape);
         eqShapes.push(myShape);
     }
-
+    //make a special cube for bass and for hi-hat
     const bassBox = new Mesh(geometry, new MeshStandardMaterial({ color: new Color("cyan") }))
-    scene.add(bassBox)
     const hiHatBox = new Mesh(geometry, new MeshStandardMaterial({ color: new Color("cyan") }))
-
     bassBox.position.set(-25, 0, -10);
     hiHatBox.position.set(25, 0, -10);
-
+    scene.add(bassBox)
     scene.add(hiHatBox)
 
+    //let's go!
     animate();
 
     function animate() {
 
+        //if the analyser is ready - might take a while to load audio
         if (audioAnalyser) {
+
+            //seems to work - documentation is sparse
             audioAnalyser.getAverageFrequency();
             for (let i = 0; i < numEqBands; i++) {
                 eqShapes[i].position.y = 20 * audioAnalyser.data[i] / 255;

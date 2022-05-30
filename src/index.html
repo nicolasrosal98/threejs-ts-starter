@@ -4,26 +4,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>ThreeJS + TypeScript + Parcel: Scroll-interactive page background</title>
+    <title>
+      ThreeJS + TypeScript + Parcel: Scroll-interactive page background
+    </title>
     <link rel="stylesheet" href="style.css" />
     <script defer src="./index.ts"></script>
   </head>
   <body>
     <div id="info-block">
+      <div id="floating-info">blah</div>
       <div id="info">Three.js - scroll-interactive page background demo</div>
-      <div class="extra">
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit fugit, molestiae ut inventore repellat itaque tempora veniam vero atque perferendis assumenda explicabo, incidunt ab quia sit similique, architecto rem.</div>
-    
-        licensed under the <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0 Attribution 3.0 Unported License</a></div>.
+
+      <div class="extra extra1">
+        <div>
+          The canvas is given a z-index less than the other html elements of the
+          page (such as this text) so that it appears behind them.
+        </div>
+        <div>
+          The canvas given fixed positioning so that when the user scrolls, the
+          canvas stays in one place.
+        </div>
+        <div>
+          On the body, I set overscroll-behavior-y to none so that there's no
+          bounce at the end of scroll. This may not be supported well across all
+          browsers, yet.
+        </div>
+        <div id="about-floating-info">
+          Another div is given floating positioning - This "floating-info" debug
+          text element has its text value set by our scroll handler so we can
+          see better what values we're working with.
+        </div>
       </div>
-     
+
+      <div class="extra extra2">
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
+          fugit, molestiae ut inventore repellat itaque tempora veniam vero
+          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
+          architecto rem.
+        </div>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
+          fugit, molestiae ut inventore repellat itaque tempora veniam vero
+          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
+          architecto rem.
+        </div>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
+          fugit, molestiae ut inventore repellat itaque tempora veniam vero
+          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
+          architecto rem.
+        </div>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
+          fugit, molestiae ut inventore repellat itaque tempora veniam vero
+          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
+          architecto rem.
+        </div>
+      </div>
+      <div class="footer">
+        licensed under the
+        <a href="https://creativecommons.org/licenses/by/3.0/"
+          >CC BY 3.0 Attribution 3.0 Unported License</a
+        >.
+      </div>
     </div>
-    
   </body>
 </html>

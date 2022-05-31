@@ -3,7 +3,10 @@ import {
     Mesh,
     MeshStandardMaterial,
     BoxGeometry,
-    Color
+    Color,
+    CameraHelper,
+    PerspectiveCamera,
+    Vector3
 } from 'three';
 import { getExpectedElement } from './domUtils';
 import { between, lerp, map } from './math';
@@ -11,17 +14,24 @@ import { between, lerp, map } from './math';
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
-import { setupRenderer } from './setupRenderer';
+import { getAspect, setupRenderer } from './setupRenderer';
 
 export function setupThreeJSScene(): void {
 
     const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
+    const scene = new Scene();
+
     const camera = setupCamera(dimensions);
+    let cameraShakeMagnitude = 0;
+    //a second camera - just for something to look at!
+    const camera2 = new PerspectiveCamera(30, getAspect(dimensions), 50, 150);
+    camera2.position.set(0, 60, -80);
+    const camHelper = new CameraHelper(camera2);
+
+    // scene.add(camHelper);
 
     const renderer = setupRenderer(camera, dimensions);
-
-    const scene = new Scene();
 
 
     const geom = new BoxGeometry(20, 20, 20);
@@ -36,6 +46,37 @@ export function setupThreeJSScene(): void {
     scene.add(cubeMesh);
 
     document.body.onscroll = handleScroll;
+    window.addEventListener("click", increaseCameraShake)
+    setupLights(scene);
+    setupHelpers(scene);
+
+    //let's go!
+    function increaseCameraShake(): void {
+        3 + 4;
+        console.log(Math.random())
+        cameraShakeMagnitude++;
+    }
+
+    animate();
+
+    function animate() {
+
+        renderer.render(scene, camera);
+
+        //lerp rotation towards its desired value, a little each frame
+        cubeMesh.rotation.y = lerp(cubeMesh.rotation.y, cubeMesh.userData.desiredRotationY, 0.1);
+        cubeMesh.rotation.x = lerp(cubeMesh.rotation.x, cubeMesh.userData.desiredRotationX, 0.1);
+        cubeMesh.position.x = lerp(cubeMesh.position.x, cubeMesh.userData.desiredPositionX, 0.1);
+        cubeMesh.scale.y = lerp(cubeMesh.scale.y, cubeMesh.userData.desiredDimHeight, 0.1);
+        camera2.lookAt(cubeMesh.position.x, cubeMesh.position.y, cubeMesh.position.z)
+
+        const offset = new Vector3().randomDirection().multiplyScalar(cameraShakeMagnitude * 2);
+        camera.position.addVectors(camera.userData.origPosition, offset);
+        //reduce
+        cameraShakeMagnitude = Math.max(0, cameraShakeMagnitude * 0.95);
+
+        requestAnimationFrame(animate);
+    }
 
     function handleScroll() {
         //Note: It is likely better to do all this more declaratively with GSAP
@@ -43,6 +84,7 @@ export function setupThreeJSScene(): void {
         setHudText("t: " + t);
         handleScrollEffectOnSpinnyCube(t);
         handleScrollEffectOnFloatingInfoPara();
+        handleScrollEffectOnCamera(t);
     }
 
     function handleScrollEffectOnSpinnyCube(t: number): void {
@@ -83,24 +125,14 @@ export function setupThreeJSScene(): void {
             fiElem.classList.remove("hilit")
         }
     }
-    setupLights(scene);
-    setupHelpers(scene);
 
-    //let's go!
-    animate();
+    function handleScrollEffectOnCamera(t: number): void {
+        camera.fov = map(Math.cos(t / 1000), -1, 1, 60, 110);
+        camera.updateProjectionMatrix();
+        // camera.lookAt(cubeMesh.position.x, cubeMesh.position.y, cubeMesh.position.z)
 
-    function animate() {
-
-        renderer.render(scene, camera);
-
-        //lerp rotation towards its desired value, a little each frame
-
-        cubeMesh.rotation.y = lerp(cubeMesh.rotation.y, cubeMesh.userData.desiredRotationY, 0.1);
-        cubeMesh.rotation.x = lerp(cubeMesh.rotation.x, cubeMesh.userData.desiredRotationX, 0.1);
-        cubeMesh.position.x = lerp(cubeMesh.position.x, cubeMesh.userData.desiredPositionX, 0.1);
-        cubeMesh.scale.y = lerp(cubeMesh.scale.y, cubeMesh.userData.desiredDimHeight, 0.1);
-
-        requestAnimationFrame(animate);
+        camera2.position.y = map(Math.sin(t / 440), -1, 1, 30, 100);
+        camera2.updateProjectionMatrix();
     }
 }
 

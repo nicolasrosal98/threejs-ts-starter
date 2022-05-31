@@ -4,16 +4,15 @@ import {
     MeshStandardMaterial,
     BoxGeometry,
     Color,
-    CameraHelper,
     PerspectiveCamera,
-    Vector3
+    Vector3,
+    GridHelper
 } from 'three';
 import { clamp, mapLinear } from 'three/src/math/MathUtils';
 import { getExpectedElement } from './domUtils';
 import { between, lerp, map } from './math';
 
 import { setupCamera } from './setupCamera';
-import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { getAspect, setupRenderer } from './setupRenderer';
 
@@ -30,7 +29,7 @@ export function setupThreeJSScene(): void {
     };
 
     const scene = new Scene();
-
+    scene.background = new Color(0x202020);
     const camera = setupCamera(dimensions);
     let cameraShakeMagnitude = 0;
     //a second camera - just for something to look at!
@@ -60,7 +59,10 @@ export function setupThreeJSScene(): void {
     document.body.onscroll = handleScroll;
     window.addEventListener("click", increaseCameraShake)
     setupLights(scene);
-    setupHelpers(scene);
+    // setupHelpers(scene);
+    const gridHelper = new GridHelper(100);
+    scene.add(gridHelper);
+    gridHelper.visible = false;
 
     //let's go!
     function increaseCameraShake(): void {
@@ -68,28 +70,33 @@ export function setupThreeJSScene(): void {
         console.log(Math.random())
         cameraShakeMagnitude++;
     }
-
+    let frameCount = 1;
     animate();
 
     function animate() {
-
         renderer.render(scene, camera);
 
         //lerp rotation towards its desired value, a little each frame
         cubeMesh.rotation.y = lerp(cubeMesh.rotation.y, cubeMesh.userData.desiredRotationY, 0.1);
         cubeMesh.rotation.x = lerp(cubeMesh.rotation.x, cubeMesh.userData.desiredRotationX, 0.1);
 
-        cubeMesh.position.lerp(cubeMesh.userData.desiredPosition, 0.1);
+        //always add a bit of motion
+        const posOffset = new Vector3(2 * Math.sin(frameCount / 44), 0, 0 + 2 * Math.cos(frameCount / 44));
+        const p = cubeMesh.userData.desiredPosition.clone();
+        p.add(posOffset);
+        cubeMesh.position.lerp(p, 0.1);
+
 
         cubeMesh.scale.y = lerp(cubeMesh.scale.y, cubeMesh.userData.desiredDimHeight, 0.1);
         camera2.lookAt(cubeMesh.position.x, cubeMesh.position.y, cubeMesh.position.z)
 
-        const offset = new Vector3().randomDirection().multiplyScalar(cameraShakeMagnitude * 2);
-        camera.position.addVectors(camera.userData.origPosition, offset);
+        const camOffset = new Vector3().randomDirection().multiplyScalar(cameraShakeMagnitude * 2);
+        camera.position.addVectors(camera.userData.origPosition, camOffset);
         //reduce shake to zero over time.
         cameraShakeMagnitude = Math.max(0, cameraShakeMagnitude * 0.95);
 
         requestAnimationFrame(animate);
+        frameCount++;
     }
 
     function handleScroll() {
@@ -124,10 +131,13 @@ export function setupThreeJSScene(): void {
                 cubeMesh.userData.desiredRotationY = map(t, min, max, t / 150, 0)
             }
         }
+        if (beforeAnimRange(t, animCutPoints.bobble)) {
+            gridHelper.visible = false;
+        }
         if (inAnimRange(t, animCutPoints.bobble)) {
             cubeMesh.userData.desiredDimHeight = 0.1 + 0.8 * (1 + Math.sin(t / 40));
             cubeMesh.userData.desiredPosition.set(-50, 15, 0);
-
+            gridHelper.visible = true;
         }
         if (inAnimRange(t, animCutPoints.goToSpace)) {
             const { max, min } = animCutPoints.rightLeft;
@@ -138,10 +148,7 @@ export function setupThreeJSScene(): void {
         }
         if (afterAnimRange(t, animCutPoints.goToSpace)) {
             cubeMesh.userData.desiredRotationY = Math.sin(t / 200)
-            cubeMesh.userData.desiredPosition.set(
-                30 + 5 * Math.sin(t / 44),
-                120,
-                0 + 5 * Math.cos(t / 44));
+
             // cubeMesh.userData.desiredDimHeight = 0.1 + Math.abs(Math.sin(t / 80))
         }
         cubeMesh.material.color = new Color("cyan").lerp(new Color("magenta"), Math.abs(Math.sin(t / 700)));
@@ -152,6 +159,9 @@ export function setupThreeJSScene(): void {
     }
     function afterAnimRange(t: number, { min }: { min: number }): boolean {
         return (t < min);
+    }
+    function beforeAnimRange(t: number, { max }: { max: number }): boolean {
+        return (t > max);
     }
 
     function isElemOnScreen(e: Element) {

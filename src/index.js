@@ -1,4 +1,6 @@
-//always the latest version of three.js from here, i think.
+//Import three.js library from a CDN.
+//This should always give us the latest version.
+//@ts-ignore
 import * as THREE from "https://cdn.skypack.dev/three";
 
 const camera = new THREE.PerspectiveCamera(

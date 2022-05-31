@@ -1,5 +1,7 @@
 html {
   box-sizing: border-box;
+  font-family: 'Neuton', serif;
+  /* font-family: 'Roboto', sans-serif; */
 }
 
 *,
@@ -51,19 +53,18 @@ canvas {
 
 .extra {
   margin-bottom: 100px;
-  font-size: 2rem;
+  font-size: 1.2rem;
+  text-align: justify;
 }
 
 .extra1 {
   margin-top: 300px;
   grid-column: 2/6;
-  font-size: 2rem;
 }
 
 .extra2 {
   margin-top: 300px;
   grid-column: 5/11;
-  font-size: 2rem;
 }
 
 .footer {

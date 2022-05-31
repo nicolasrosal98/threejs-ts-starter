@@ -8,6 +8,12 @@
       ThreeJS + TypeScript + Parcel: Scroll-interactive page background
     </title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Neuton&family=Roboto:wght@500&display=swap"
+      rel="stylesheet"
+    />
     <script defer src="./index.ts"></script>
   </head>
   <body>
@@ -38,29 +44,28 @@
       </div>
 
       <div class="extra extra2">
+        <div>An event handler (function) is set on document.body.onscroll.</div>
+        <div>This function is called whenever a scroll event happens.</div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
-          fugit, molestiae ut inventore repellat itaque tempora veniam vero
-          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
-          architecto rem.
+          The function looks at the relative position of the top of the body
+          element, let's call it t. (t starts at zero, goes increasingly
+          negative as we scroll)
         </div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
-          fugit, molestiae ut inventore repellat itaque tempora veniam vero
-          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
-          architecto rem.
+          This value, t, is used to compute various properties of the objects in
+          the scene - the rotations of the spinning cube, and its position on
+          the x axis.
         </div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
-          fugit, molestiae ut inventore repellat itaque tempora veniam vero
-          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
-          architecto rem.
+          Actually, that's a lie - in most cases, t is not directly used.
+          Instead of setting the property directly from t, we set a
+          <em>desired</em>
+          value for the property and then, each frame, animate (lerp) the
+          property some fraction of the way towards its desired value.
         </div>
         <div>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. At suscipit
-          fugit, molestiae ut inventore repellat itaque tempora veniam vero
-          atque perferendis assumenda explicabo, incidunt ab quia sit similique,
-          architecto rem.
+          This ensures that the animation happens smoothly and doesn't jerk to a
+          halt just because scroll events suddenly cease.
         </div>
       </div>
       <div class="footer">

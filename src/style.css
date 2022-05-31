@@ -1,3 +1,7 @@
+:root {
+  --hudTextColour: rgb(42, 117, 87);
+}
+
 html {
   box-sizing: border-box;
   font-family: 'Neuton', serif;
@@ -73,7 +77,7 @@ canvas {
 }
 
 #floating-info {
-  color: #0a6;
+  color: var(--hudTextColour);
   position: fixed;
   width: 400px;
   bottom: 50px;
@@ -83,6 +87,7 @@ canvas {
 }
 
 .hilit {
-  outline: 8px solid #0a66;
+  outline: 8px solid var(--hudTextColour);
+  outline-offset: 5px;
   border-radius: 5px;
 }

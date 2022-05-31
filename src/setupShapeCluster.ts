@@ -1,7 +1,9 @@
 import { Scene, BoxBufferGeometry, MeshStandardMaterial, Color, Mesh } from "three";
+import { randFloat, randFloatSpread } from "three/src/math/MathUtils";
+
 import { pick } from "./randomUtils";
 
-export function setupShapeCluster(scene: Scene) {
+export function setupShapeCluster(scene: Scene): void {
     //From https://nice-colours-quicker.netlify.app/
     const palette = [
         "#00a0b0",
@@ -12,19 +14,19 @@ export function setupShapeCluster(scene: Scene) {
     ];
 
     for (let i = 0; i < 40; i++) {
-        const w = 8 + Math.random() * 8;
-        const h = 8 + Math.random() * 8;
-        const d = 8 + Math.random() * 8;
+        const w = randFloat(8, 16);
+        const h = randFloat(8, 16);
+        const d = randFloat(8, 16);
 
         const geometry = new BoxBufferGeometry(w, h, d);
         const material = new MeshStandardMaterial({
             color: new Color(pick(palette))
         });
 
-        let myShape: Mesh = new Mesh(geometry, material);
-        const x = -20 + Math.random() * 40;
-        const y = -20 + Math.random() * 40;
-        const z = -20 + Math.random() * 40;
+        const myShape: Mesh = new Mesh(geometry, material);
+        const x = randFloatSpread(40);
+        const y = randFloatSpread(40);
+        const z = randFloatSpread(40);
         myShape.position.set(x, y, z);
 
         scene.add(myShape);

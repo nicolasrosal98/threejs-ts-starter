@@ -6,9 +6,9 @@ import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 import { setupShapeCluster } from './setupShapeCluster';
 
-export function setupThreeJSScene() {
+export function setupThreeJSScene(): void {
 
-    let dimensions = { w: window.innerWidth, h: window.innerHeight };
+    const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
     const camera = setupCamera(dimensions);
 
@@ -16,7 +16,7 @@ export function setupThreeJSScene() {
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 
-    let scene = new Scene();
+    const scene = new Scene();
 
     setupLights(scene);
 
@@ -24,7 +24,7 @@ export function setupThreeJSScene() {
 
     setupShapeCluster(scene);
 
-    setupKeyHandlers(renderer.domElement);
+    setupKeyHandlers();
 
     animate();
 
@@ -40,7 +40,7 @@ export function setupThreeJSScene() {
         requestAnimationFrame(animate);
     }
 
-    function setupKeyHandlers(elem: HTMLElement) {
+    function setupKeyHandlers(): void {
 
         function handleKeyDown(event: KeyboardEvent) {
             if (event.key === "r") {

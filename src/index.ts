@@ -27,8 +27,9 @@ export function setupThreeJSScene(): void {
     //a second camera - just for something to look at!
     const camera2 = new PerspectiveCamera(30, getAspect(dimensions), 50, 150);
     camera2.position.set(0, 60, -80);
-    const camHelper = new CameraHelper(camera2);
 
+    //add this in to see an animated camera
+    // const camHelper = new CameraHelper(camera2);
     // scene.add(camHelper);
 
     const renderer = setupRenderer(camera, dimensions);
@@ -72,7 +73,7 @@ export function setupThreeJSScene(): void {
 
         const offset = new Vector3().randomDirection().multiplyScalar(cameraShakeMagnitude * 2);
         camera.position.addVectors(camera.userData.origPosition, offset);
-        //reduce
+        //reduce shake to zero over time.
         cameraShakeMagnitude = Math.max(0, cameraShakeMagnitude * 0.95);
 
         requestAnimationFrame(animate);

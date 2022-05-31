@@ -1,3 +1,7 @@
+//To start this simplest example running, you should just
+// load the index.html file from a browser, e.g. using
+//the "live server" extension.
+
 //Import three.js library from a CDN.
 //This should always give us the latest version.
 //@ts-ignore

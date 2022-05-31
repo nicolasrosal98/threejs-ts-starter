@@ -8,7 +8,7 @@ import {
     PerspectiveCamera,
     Vector3
 } from 'three';
-import { mapLinear } from 'three/src/math/MathUtils';
+import { clamp, mapLinear } from 'three/src/math/MathUtils';
 import { getExpectedElement } from './domUtils';
 import { between, lerp, map } from './math';
 
@@ -106,6 +106,8 @@ export function setupThreeJSScene(): void {
             cubeMesh.userData.desiredRotationX = 0;
             cubeMesh.userData.desiredRotationY = t / 150;
             cubeMesh.userData.desiredPosition = new Vector3(30, 15, 0);
+            cubeMesh.userData.desiredDimHeight = 1;
+
         }
 
         if (inAnimRange(t, animCutPoints.rightLeft)) {
@@ -118,22 +120,21 @@ export function setupThreeJSScene(): void {
                 //you COULD cut straight over without this intermediate band - lerp will smooth a little, 
                 //but it'd be a very rapid transition on one pixel of scroll
                 cubeMesh.userData.desiredPosition.set(map(t, min, max, -40, 30), 15, 0);
-
                 cubeMesh.userData.desiredRotationX = map(t, min, max, 0, t / 150)
                 cubeMesh.userData.desiredRotationY = map(t, min, max, t / 150, 0)
             }
         }
         if (inAnimRange(t, animCutPoints.bobble)) {
             cubeMesh.userData.desiredDimHeight = 0.1 + 0.8 * (1 + Math.sin(t / 40));
+            cubeMesh.userData.desiredPosition.set(-50, 15, 0);
 
         }
         if (inAnimRange(t, animCutPoints.goToSpace)) {
             const { max, min } = animCutPoints.rightLeft;
-            if (t < min) {
-                cubeMesh.userData.desiredPosition.set(30, 100, 0);
-            } else {
-                cubeMesh.userData.desiredPosition.y = map(t, min, max, 300, 20)
-            }
+            cubeMesh.userData.desiredDimHeight = 0.1 + 0.8 * (1 + Math.sin(t / 40));
+
+            cubeMesh.userData.desiredPosition.set(30, map(t, min, max, 40, 20), 0);
+            cubeMesh.userData.desiredRotationY = Math.sin(t / 200)
 
         }
         cubeMesh.material.color = new Color("cyan").lerp(new Color("magenta"), Math.abs(Math.sin(t / 700)));
@@ -144,8 +145,8 @@ export function setupThreeJSScene(): void {
     }
     function handleScrollEffectOnFloatingInfoPara(): void {
         const afiElem = getExpectedElement("about-floating-info");
-        const fiElem = getExpectedElement("floating-info");
 
+        const fiElem = getExpectedElement("floating-info");
         const fiElemTop = afiElem.getBoundingClientRect().top;
         if (between(fiElemTop, 0, 500)) {
             fiElem.classList.add("hilit");
@@ -162,15 +163,17 @@ export function setupThreeJSScene(): void {
         camera.updateProjectionMatrix();
         const { max, min } = animCutPoints.goToSpace;
 
+        const target2 = new Vector3(0, 200, 0);
+        const target = new Vector3(0, 0, -500);
+        const tClamped = clamp(t, min, max);
         if (t < max) {
-            const target2 = new Vector3(0, 200, 0);
-            const frac = mapLinear(t, min, max, 1, 0);
-            cameraLookAtTarget.lerp(target2, frac);
+            const frac = mapLinear(tClamped, min, max, 1, 0);
+            cameraLookAtTarget.copy(target.clone().lerp(target2, frac));
         } else {
-            const target = new Vector3(0, 0, -500);
-            cameraLookAtTarget.lerp(target, 0.1);
+            cameraLookAtTarget.copy(target);
         }
         camera.lookAt(cameraLookAtTarget.x, cameraLookAtTarget.y, cameraLookAtTarget.z)
+
         camera2.position.y = map(Math.sin(t / 440), -1, 1, 30, 100);
         camera2.updateProjectionMatrix();
     }

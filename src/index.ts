@@ -8,9 +8,10 @@ import {
     Vector3,
     GridHelper
 } from 'three';
-import { clamp, mapLinear } from 'three/src/math/MathUtils';
+import { lerp, clamp, mapLinear } from 'three/src/math/MathUtils';
 import { getExpectedElement } from './domUtils';
-import { between, lerp, map } from './math';
+import { between } from './math';
+
 
 import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
@@ -126,9 +127,9 @@ export function setupThreeJSScene(): void {
             } else if (t < max) {
                 //you COULD cut straight over without this intermediate band - lerp will smooth a little, 
                 //but it'd be a very rapid transition on one pixel of scroll
-                cubeMesh.userData.desiredPosition.set(map(t, min, max, -40, 30), 15, 0);
-                cubeMesh.userData.desiredRotationX = map(t, min, max, 0, t / 150)
-                cubeMesh.userData.desiredRotationY = map(t, min, max, t / 150, 0)
+                cubeMesh.userData.desiredPosition.set(mapLinear(t, min, max, -40, 30), 15, 0);
+                cubeMesh.userData.desiredRotationX = mapLinear(t, min, max, 0, t / 150)
+                cubeMesh.userData.desiredRotationY = mapLinear(t, min, max, t / 150, 0)
             }
         }
         if (beforeAnimRange(t, animCutPoints.bobble)) {
@@ -143,7 +144,7 @@ export function setupThreeJSScene(): void {
             const { max, min } = animCutPoints.rightLeft;
             cubeMesh.userData.desiredDimHeight = 0.1 + 0.8 * (1 + Math.sin(t / 40));
 
-            cubeMesh.userData.desiredPosition.set(30, map(t, min, max, 50, 20), 0);
+            cubeMesh.userData.desiredPosition.set(30, mapLinear(t, min, max, 50, 20), 0);
             cubeMesh.userData.desiredRotationY = Math.sin(t / 200)
         }
         if (afterAnimRange(t, animCutPoints.goToSpace)) {
@@ -190,7 +191,7 @@ export function setupThreeJSScene(): void {
     }
 
     function handleScrollEffectOnCamera(t: number): void {
-        camera.fov = map(Math.cos(t / 1000), -1, 1, 60, 110);
+        camera.fov = mapLinear(Math.cos(t / 1000), -1, 1, 60, 110);
         camera.updateProjectionMatrix();
         const { max, min } = animCutPoints.goToSpace;
 
@@ -205,7 +206,7 @@ export function setupThreeJSScene(): void {
         }
         camera.lookAt(cameraLookAtTarget.x, cameraLookAtTarget.y, cameraLookAtTarget.z)
 
-        camera2.position.y = map(Math.sin(t / 440), -1, 1, 30, 100);
+        camera2.position.y = mapLinear(Math.sin(t / 440), -1, 1, 30, 100);
         camera2.updateProjectionMatrix();
     }
 }

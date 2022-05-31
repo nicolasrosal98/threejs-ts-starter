@@ -1,8 +1,8 @@
-import { PerspectiveCamera, WebGLRenderer } from "three";
+import { PerspectiveCamera, Renderer, WebGLRenderer } from "three";
 
-export function setupRenderer(camera: PerspectiveCamera, dim: { w: number, h: number }) {
+export function setupRenderer(camera: PerspectiveCamera, dim: { w: number, h: number }): Renderer {
 
-    let renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
+    const renderer: WebGLRenderer = new WebGLRenderer({ antialias: true });
     renderer.setSize(dim.w, dim.h);
     document.body.appendChild(renderer.domElement);
 
@@ -22,7 +22,7 @@ export function setupRenderer(camera: PerspectiveCamera, dim: { w: number, h: nu
     return renderer;
 }
 
-export function getAspect(dim: { w: number, h: number }) {
+export function getAspect(dim: { w: number, h: number }): number {
     return dim.w / dim.h;
 }
 

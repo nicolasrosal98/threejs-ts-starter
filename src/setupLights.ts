@@ -1,6 +1,6 @@
 import { AmbientLight, DirectionalLight, Scene } from "three";
 
-export function setupLights(scene: Scene) {
+export function setupLights(scene: Scene): void {
     //lights
     const dirLight1 = new DirectionalLight();
     scene.add(dirLight1);

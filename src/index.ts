@@ -133,9 +133,16 @@ export function setupThreeJSScene(): void {
             const { max, min } = animCutPoints.rightLeft;
             cubeMesh.userData.desiredDimHeight = 0.1 + 0.8 * (1 + Math.sin(t / 40));
 
-            cubeMesh.userData.desiredPosition.set(30, map(t, min, max, 40, 20), 0);
+            cubeMesh.userData.desiredPosition.set(30, map(t, min, max, 50, 20), 0);
             cubeMesh.userData.desiredRotationY = Math.sin(t / 200)
-
+        }
+        if (afterAnimRange(t, animCutPoints.goToSpace)) {
+            cubeMesh.userData.desiredRotationY = Math.sin(t / 200)
+            cubeMesh.userData.desiredPosition.set(
+                30 + 5 * Math.sin(t / 44),
+                120,
+                0 + 5 * Math.cos(t / 44));
+            // cubeMesh.userData.desiredDimHeight = 0.1 + Math.abs(Math.sin(t / 80))
         }
         cubeMesh.material.color = new Color("cyan").lerp(new Color("magenta"), Math.abs(Math.sin(t / 700)));
 
@@ -143,6 +150,10 @@ export function setupThreeJSScene(): void {
     function inAnimRange(t: number, { max, min }: { max: number, min: number }): boolean {
         return (t >= min && t <= max);
     }
+    function afterAnimRange(t: number, { min }: { min: number }): boolean {
+        return (t < min);
+    }
+
     function isElemOnScreen(e: Element) {
         const elTop = e.getBoundingClientRect().top;
         return between(elTop, 0, 500);

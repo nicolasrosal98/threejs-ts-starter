@@ -4,12 +4,13 @@ import {
     MeshStandardMaterial,
     BoxGeometry,
     Color,
-    CameraHelper,
+    // CameraHelper,
     PerspectiveCamera,
     Vector3
 } from 'three';
+import { lerp, mapLinear } from 'three/src/math/MathUtils';
 import { getExpectedElement } from './domUtils';
-import { between, lerp, map } from './math';
+import { between } from './math';
 
 import { setupCamera } from './setupCamera';
 import { setupHelpers } from './setupHelpers';
@@ -100,9 +101,9 @@ export function setupThreeJSScene(): void {
         } else if (t < cutHeight2) {
             //you COULD cut straight over without this intermediate band - lerp will smooth a little, 
             //but it'd be a very rapid transition on one pixel of scroll
-            cubeMesh.userData.desiredPositionX = map(t, cutHeight1, cutHeight2, -40, 30)
-            cubeMesh.userData.desiredRotationY = map(t, cutHeight1, cutHeight2, t / 150, 0)
-            cubeMesh.userData.desiredRotationX = map(t, cutHeight1, cutHeight2, 0, t / 150)
+            cubeMesh.userData.desiredPositionX = mapLinear(t, cutHeight1, cutHeight2, -40, 30)
+            cubeMesh.userData.desiredRotationY = mapLinear(t, cutHeight1, cutHeight2, t / 150, 0)
+            cubeMesh.userData.desiredRotationX = mapLinear(t, cutHeight1, cutHeight2, 0, t / 150)
         } else {
             cubeMesh.userData.desiredRotationX = t / 150;
             cubeMesh.userData.desiredRotationY = 0;
@@ -128,11 +129,11 @@ export function setupThreeJSScene(): void {
     }
 
     function handleScrollEffectOnCamera(t: number): void {
-        camera.fov = map(Math.cos(t / 1000), -1, 1, 60, 110);
+        camera.fov = mapLinear(Math.cos(t / 1000), -1, 1, 60, 110);
         camera.updateProjectionMatrix();
         // camera.lookAt(cubeMesh.position.x, cubeMesh.position.y, cubeMesh.position.z)
 
-        camera2.position.y = map(Math.sin(t / 440), -1, 1, 30, 100);
+        camera2.position.y = mapLinear(Math.sin(t / 440), -1, 1, 30, 100);
         camera2.updateProjectionMatrix();
     }
 }

@@ -89,11 +89,11 @@ export function setupThreeJSScene(): void {
     }
 
     function handleScrollEffectOnSpinnyCube(t: number): void {
-        const cutHeight1 = -1200;
-        const cutHeight2 = -850;
+        const cutHeight1 = -700;
+        const cutHeight2 = -300;
 
         if (t < cutHeight1) {
-            cubeMesh.userData.desiredPositionX = -40;
+            cubeMesh.userData.desiredPositionX = -50;
             cubeMesh.userData.desiredRotationX = 0;
             cubeMesh.userData.desiredRotationY = t / 150;
             cubeMesh.userData.desiredDimHeight = 0.1 + 0.8 * (1 + Math.sin(t / 40));

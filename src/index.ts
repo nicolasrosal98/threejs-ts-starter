@@ -26,7 +26,7 @@ export function setupThreeJSScene(): void {
         initial: { max: 0, min: -600 },
         rightLeft: { max: -600, min: -1000 },
         bobble: { max: -1000, min: -1900 },
-        goToSpace: { max: -1900, min: -2400 },
+        goToSpace: { max: -1900, min: -2100 },
     };
 
     const scene = new Scene();
@@ -143,18 +143,28 @@ export function setupThreeJSScene(): void {
     function inAnimRange(t: number, { max, min }: { max: number, min: number }): boolean {
         return (t >= min && t <= max);
     }
+    function isElemOnScreen(e: Element) {
+        const elTop = e.getBoundingClientRect().top;
+        return between(elTop, 0, 500);
+    }
+
     function handleScrollEffectOnFloatingInfoPara(): void {
-        const afiElem = getExpectedElement("about-floating-info");
 
-        const fiElem = getExpectedElement("floating-info");
-        const fiElemTop = afiElem.getBoundingClientRect().top;
-        if (between(fiElemTop, 0, 500)) {
-            fiElem.classList.add("hilit");
-            afiElem.classList.add("hilit");
+        const aboutElems = Array.from(document.getElementsByClassName("about-floating-info"));
+        const floatingInfoElem = getExpectedElement("floating-info");
 
+        for (const aboutElem of aboutElems) {
+            if (isElemOnScreen(aboutElem)) {
+                aboutElem.classList.add("hilit");
+            } else {
+                aboutElem.classList.remove("hilit")
+            }
+        }
+
+        if (aboutElems.some(isElemOnScreen)) {
+            floatingInfoElem.classList.add("hilit");
         } else {
-            afiElem.classList.remove("hilit")
-            fiElem.classList.remove("hilit")
+            floatingInfoElem.classList.remove("hilit")
         }
     }
 
@@ -163,14 +173,14 @@ export function setupThreeJSScene(): void {
         camera.updateProjectionMatrix();
         const { max, min } = animCutPoints.goToSpace;
 
-        const target2 = new Vector3(0, 200, 0);
-        const target = new Vector3(0, 0, -500);
+        const targetUp = new Vector3(0, 200, 0);
+        const targetForward = new Vector3(0, 0, -500);
         const tClamped = clamp(t, min, max);
         if (t < max) {
             const frac = mapLinear(tClamped, min, max, 1, 0);
-            cameraLookAtTarget.copy(target.clone().lerp(target2, frac));
+            cameraLookAtTarget.copy(targetForward.clone().lerp(targetUp, frac));
         } else {
-            cameraLookAtTarget.copy(target);
+            cameraLookAtTarget.copy(targetForward);
         }
         camera.lookAt(cameraLookAtTarget.x, cameraLookAtTarget.y, cameraLookAtTarget.z)
 

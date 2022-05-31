@@ -35,7 +35,7 @@
           bounce at the end of scroll. This may not be supported well across all
           browsers, yet.
         </div>
-        <div id="about-floating-info">
+        <div class="about-floating-info">
           Another div is given floating positioning - this "floating-info"
           element is used for debug text. It has its innerText set by our scroll
           handler to animation variables we're using in our three.js scene.
@@ -50,6 +50,9 @@
           The function looks at the relative position of the top of the body
           element, let's call it t. (t starts at zero, goes increasingly
           negative as we scroll)
+        </div>
+        <div class="about-floating-info">
+          You can see the value of t in the floating info debug text.
         </div>
         <div>
           This value, t, is used to compute various properties of the objects in
@@ -69,12 +72,7 @@
         </div>
       </div>
       <div class="extra extra1">
-        <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam quasi
-          amet dignissimos autem et nemo pariatur. Temporibus, deleniti sit
-          suscipit, neque incidunt porro molestiae odit ut reiciendis sapiente
-          impedit cupiditate?
-        </div>
+        <div>Up? We can animate what the camera looks at, too.</div>
         <div>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam quasi
           amet dignissimos autem et nemo pariatur. Temporibus, deleniti sit

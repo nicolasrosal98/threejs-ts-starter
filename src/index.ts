@@ -14,9 +14,9 @@ import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 
-export function setupThreeJSScene() {
+export function setupThreeJSScene(): void {
 
-    let dimensions = { w: window.innerWidth, h: window.innerHeight };
+    const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
     const camera = setupCamera(dimensions);
 
@@ -24,7 +24,7 @@ export function setupThreeJSScene() {
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 
-    let scene = new Scene();
+    const scene = new Scene();
 
     setupLights(scene);
 
@@ -47,7 +47,7 @@ export function setupThreeJSScene() {
     });
     const eqShapes: Mesh[] = [];
     for (let i = 0; i < numEqBands; i++) {
-        let myShape: Mesh = new Mesh(geometry, material);
+        const myShape: Mesh = new Mesh(geometry, material);
         myShape.position.x = i;
         myShape.position.y = 20;
         scene.add(myShape);

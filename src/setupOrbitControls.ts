@@ -6,7 +6,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
  * @param htmlElement - html (canvas?) element on which to listen for mouse events 
  * @param camera - camera to move, rotate and zoom based on user input
 */
-export function setupOrbitControls(camera: Camera, htmlElement: HTMLElement) {
+export function setupOrbitControls(camera: Camera, htmlElement: HTMLElement): OrbitControls {
 
     const controls = new OrbitControls(camera, htmlElement);
     controls.autoRotate = false;

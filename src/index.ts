@@ -8,9 +8,9 @@ import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 import { setupTerrain } from './setupTerrain';
 
-export function setupThreeJSScene() {
+export function setupThreeJSScene(): void {
 
-    let dimensions = { w: window.innerWidth, h: window.innerHeight };
+    const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
     const camera = setupCamera(dimensions);
 
@@ -18,7 +18,7 @@ export function setupThreeJSScene() {
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 
-    let scene = new Scene();
+    const scene = new Scene();
 
     setupLights(scene);
 

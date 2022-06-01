@@ -6,7 +6,7 @@ import SimplexNoise from 'simplex-noise';
 /** Add a grid of tiles (mesh objects) to the given scene, at different heights, to simulate (blocky) terrain.
  * Heights (and colours) are calculated from an open-simplex noise algorithm (from a library).
  */
-export function setupTerrain(scene: Scene) {
+export function setupTerrain(scene: Scene): void {
     // initializing a new simplex instance
     // do this only once as it is relatively expensive
     const simplex = new SimplexNoise()
@@ -41,8 +41,8 @@ export function setupTerrain(scene: Scene) {
             scene.add(oneTileMesh);
         }
     }
-
 }
+
 function getColourNameForNoiseVal(noiseVal: number): string {
     if (noiseVal < -0.3) {
         return "navy";  //deep water

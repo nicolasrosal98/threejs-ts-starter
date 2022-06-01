@@ -1,15 +1,19 @@
-import { Scene, Mesh, MeshStandardMaterial, BoxBufferGeometry, ConeGeometry } from "three";
+import {
+  Scene,
+  Mesh,
+  MeshStandardMaterial,
+  BoxBufferGeometry,
+  ConeGeometry,
+} from "three";
 import { setupCamera } from "./setupCamera";
 import { setupHelpers } from "./setupHelpers";
 import { setupLights } from "./setupLights";
 import { setupOrbitControls } from "./setupOrbitControls";
 import { setupRenderer } from "./setupRenderer";
 
-export function setupThreeJSScene() {
+export function setupThreeJSScene(): void {
   const dimensions = { w: window.innerWidth, h: window.innerHeight };
-
   const camera = setupCamera(dimensions);
-
   const renderer = setupRenderer(camera, dimensions);
 
   const controls = setupOrbitControls(camera, renderer.domElement);
@@ -32,15 +36,14 @@ export function setupThreeJSScene() {
   ////Christmas tree
   const coneGeometry = new ConeGeometry(2, 5, 10);
   const coneMaterial = new MeshStandardMaterial({
-    color: 0x00ff00
+    color: 0x00ff00,
   });
   const myLowerTree: Mesh = new Mesh(coneGeometry, coneMaterial);
   const myUpperTree: Mesh = new Mesh(coneGeometry, coneMaterial);
-  myLowerTree.position.set(50,5,-50)
-  myUpperTree.position.set(50,8,-50)
-  scene.add(myLowerTree)
-  scene.add(myUpperTree)
-  
+  myLowerTree.position.set(50, 5, -50);
+  myUpperTree.position.set(50, 8, -50);
+  scene.add(myLowerTree);
+  scene.add(myUpperTree);
 
   animate();
 

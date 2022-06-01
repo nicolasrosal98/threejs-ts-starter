@@ -2,6 +2,8 @@ import { Group } from "three";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
+//A good place to start reading is: 
+//https://threejs.org/manual/#en/load-gltf
 export async function loadModel(url: string): Promise<Group | null> {
     const loader = new GLTFLoader();
 

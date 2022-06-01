@@ -1,7 +1,8 @@
+import { Group } from "three";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-export async function loadModel(url: string) {
+export async function loadModel(url: string): Promise<Group | null> {
     const loader = new GLTFLoader();
 
     // Optional: Provide a DRACOLoader instance to decode compressed mesh data - only some gltf files need this.

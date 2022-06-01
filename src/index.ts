@@ -6,8 +6,10 @@ import {
   ConeGeometry,
   BoxGeometry,
   Color,
+  Object3D,
 } from "three";
 import { lerp, mapLinear } from "three/src/math/MathUtils";
+import { dumpObjectToConsoleAsString } from "./debug";
 import { loadModel } from "./loadModel";
 import { setupCamera } from "./setupCamera";
 import { setupHelpers } from "./setupHelpers";
@@ -28,6 +30,17 @@ export async function setupThreeJSScene(): Promise<void> {
 
   setupHelpers(scene);
 
+  function explodeDynamite(): void {
+    if (periscope) {
+      periscope.scale.setScalar(periscope.scale.x * 2);
+    }
+  }
+
+  const dynamite = document.getElementById("dynamite");
+  if (dynamite) {
+    dynamite.addEventListener("click", explodeDynamite);
+  }
+
   //shape(s)
   //// Cube
   const cubeGeometry = new BoxBufferGeometry(10, 10, 10);
@@ -41,8 +54,12 @@ export async function setupThreeJSScene(): Promise<void> {
   scene.add(myCube);
   //Submarine
   const submarine = await loadModel("./assets/submarine.glb");
-  submarine?.scale.setScalar(10);
+  let periscope: Object3D | undefined;
   if (submarine) {
+    // dumpObjectToConsoleAsString(submarine);
+    periscope = submarine.getObjectByName("periscope");
+    periscope?.scale.setScalar(2);
+    submarine.scale.setScalar(10);
     scene.add(submarine);
   }
   //Ocean cube
@@ -99,6 +116,9 @@ export async function setupThreeJSScene(): Promise<void> {
       desiredX = 0;
     }
 
+    if (periscope) {
+      periscope.rotation.y = t / 1000;
+    }
     // camera.position.z = 400 + t / 10;
   }
 }

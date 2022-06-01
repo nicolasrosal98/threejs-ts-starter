@@ -4,7 +4,8 @@ import { setupHelpers } from './setupHelpers';
 import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
-import { setupShapeCluster } from './setupShapeCluster';
+import { setupShapeCluster } from './setupShapeCluster'
+import { setupSymmetricalShapeCluster } from './setupSymmetricalShapeCluster';
 
 export function setupThreeJSScene(): void {
 
@@ -23,6 +24,7 @@ export function setupThreeJSScene(): void {
     setupHelpers(scene);
 
     setupShapeCluster(scene);
+    //setupSymmetricalShapeCluster(scene);
 
     setupKeyHandlers();
 

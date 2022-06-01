@@ -2,3 +2,5 @@ node_modules
 .cache/
 /dist
 .netlify/state.json
+.DS_Store
+cherry-pick-to-all.sh

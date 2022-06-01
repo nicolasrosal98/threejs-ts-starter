@@ -1,11 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+
 body {
     margin: 0;
     padding: 0;
+    overscroll-behavior: none;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 canvas {
-    display: block;
-    width: 100%;
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 50%;
     height: 100%;
+    z-index: -1;
 }
 
 /* Use CSS markup to position absolutely a div at a position above all others
@@ -15,8 +22,20 @@ with a z-index. */
     top: 10px;
     width: 100%;
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.5rem;
     z-index: 100;
     color: white;
     display: block;
+}
+
+.content {
+    color: white;
+    font-size: 3rem;
+    margin-left: 700px;
+    margin-right: 100px;
+    user-select: none;
+}
+
+.content div {
+    margin-bottom: 200px;
 }

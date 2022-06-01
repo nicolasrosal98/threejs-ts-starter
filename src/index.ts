@@ -22,7 +22,7 @@ export function setupThreeJSScene(): void {
 
     setupLights(scene);
 
-    setupHelpers(scene);
+    // setupHelpers(scene);
 
     setupTerrain(scene);
 

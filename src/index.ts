@@ -6,9 +6,9 @@ import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 
-export async function setupThreeJSScene() {
+export async function setupThreeJSScene(): Promise<void> {
 
-    let dimensions = { w: window.innerWidth, h: window.innerHeight };
+    const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
     const camera = setupCamera(dimensions);
 
@@ -16,7 +16,7 @@ export async function setupThreeJSScene() {
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 
-    let scene = new Scene();
+    const scene = new Scene();
 
     setupLights(scene);
 
@@ -47,7 +47,10 @@ export async function setupThreeJSScene() {
 
         controls.update(); // required if controls has .enableDamping .autoRotate set true.
 
-        document.getElementById("info")!.innerText = "z: " + Math.round(submarine!.position.z);
+        const infoElem = document.getElementById("info");
+        if (infoElem && submarine) {
+            infoElem.innerText = "z: " + Math.round(submarine.position.z);
+        }
         requestAnimationFrame(animate);
         frameCount++;
     }

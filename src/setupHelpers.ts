@@ -1,6 +1,6 @@
 import { Scene, AxesHelper, GridHelper } from "three";
 
-export function setupHelpers(scene: Scene) {
+export function setupHelpers(scene: Scene): void {
     const axesHelper = new AxesHelper(10);
     axesHelper.position.set(0, 1, 0); //lift up from grid
     scene.add(axesHelper);

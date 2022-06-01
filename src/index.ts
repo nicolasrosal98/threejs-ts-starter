@@ -12,9 +12,9 @@ import { setupLights } from './setupLights';
 import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 import { setupAccelerometer } from './setupAccelerometer'
-export function setupThreeJSScene() {
+export function setupThreeJSScene(): void {
 
-    let dimensions = { w: window.innerWidth, h: window.innerHeight };
+    const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
     const camera = setupCamera(dimensions);
 
@@ -22,7 +22,7 @@ export function setupThreeJSScene() {
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 
-    let scene = new Scene();
+    const scene = new Scene();
 
     setupLights(scene);
 
@@ -34,7 +34,7 @@ export function setupThreeJSScene() {
         color: new Color("red")
     });
 
-    let myShape: Mesh = new Mesh(geometry, material);
+    const myShape: Mesh = new Mesh(geometry, material);
 
     let destinationPosition: Vector3 = new Vector3(0, 0, 0);
     myShape.position.y = 20;

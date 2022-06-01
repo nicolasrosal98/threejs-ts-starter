@@ -11,5 +11,4 @@ export async function setupTreesAndHouseModel(scene: Scene): Promise<Group | nul
         return treesAndHouse;
     }
     return null;
-
 }

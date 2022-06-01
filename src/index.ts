@@ -6,9 +6,9 @@ import { setupOrbitControls } from './setupOrbitControls';
 import { setupRenderer } from './setupRenderer';
 import { setupTreesAndHouseModel } from './setupTreesAndHouseModel';
 
-export async function setupThreeJSScene() {
+export async function setupThreeJSScene(): Promise<void> {
 
-    let dimensions = { w: window.innerWidth, h: window.innerHeight };
+    const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
     const camera = setupCamera(dimensions);
 
@@ -16,7 +16,7 @@ export async function setupThreeJSScene() {
 
     const controls = setupOrbitControls(camera, renderer.domElement);
 
-    let scene = new Scene();
+    const scene = new Scene();
 
     setupLights(scene);
 

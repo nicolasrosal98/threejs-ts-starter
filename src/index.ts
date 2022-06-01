@@ -49,9 +49,23 @@ export function setupThreeJSScene(): void {
   scene.add(myUpperTree);
 
   let desiredX = 0;
+  document.body.onscroll = handleScroll;
+
   animate();
+  //   renderer.render(scene, camera);
 
   function animate() {
+    // camera.lookAt(myCube.position);
+    // myCube.rotation.x += t * 2;
+    myCube.position.x = lerp(myCube.position.x, desiredX, 0.05);
+
+    // required if controls.enableDamping or controls.autoRotate are set to true
+    // controls.update();
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(animate);
+  }
+  function handleScroll(): void {
     const titleEl = document.getElementById("info");
     const t = document.body.getBoundingClientRect().top;
 
@@ -67,17 +81,7 @@ export function setupThreeJSScene(): void {
       desiredX = 0;
     }
 
-    myCube.position.x = lerp(myCube.position.x, desiredX, 0.05);
     camera.position.z = 400 + t / 10;
-    // camera.lookAt(myCube.position);
-    // myCube.rotation.x += t * 2;
-
-    renderer.render(scene, camera);
-
-    // required if controls.enableDamping or controls.autoRotate are set to true
-    // controls.update();
-
-    requestAnimationFrame(animate);
   }
 }
 

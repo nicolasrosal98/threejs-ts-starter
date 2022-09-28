@@ -1,4 +1,4 @@
-import { Scene } from "three";
+import { Object3D, Scene } from "three";
 import { dumpObjectToConsoleAsString } from "./debugModel";
 import { loadModel } from "./loadModel";
 import { setupCamera } from "./setupCamera";
@@ -20,7 +20,7 @@ export async function setupThreeJSScene(): Promise<void> {
 
   setupHelpers(scene);
 
-  setupOrbitControls(camera, renderer.domElement);
+  // setupOrbitControls(camera, renderer.domElement);
 
   //Load a model and add it to the scene!
   const personalRoom = await loadModel("./assets/roomwebsite.glb");
@@ -37,11 +37,20 @@ export async function setupThreeJSScene(): Promise<void> {
       }
     });
 
+    let frameCount = 1;
     animate();
-
     function animate() {
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
+
+      if (personalRoom) {
+        animatePersonalRoom(personalRoom);
+      }
+      frameCount++;
+      console.log(frameCount);
+    }
+    function animatePersonalRoom(personalRoom: Object3D) {
+      personalRoom.userData.chair.rotation.y = Math.sin(frameCount / 50);
     }
   }
 }

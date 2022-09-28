@@ -9,6 +9,6 @@ export function setupCamera(dim: { w: number; h: number }): PerspectiveCamera {
     1000,
   );
   camera.position.set(2, 5, 5);
-
+  camera.lookAt(0, 1, 0);
   return camera;
 }

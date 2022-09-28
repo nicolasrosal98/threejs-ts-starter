@@ -35,9 +35,21 @@ export async function setupThreeJSScene(): Promise<void> {
       if (child.name === "chair") {
         personalRoom.userData.chair = child;
       }
+      if (child.name === "Cube") {
+        personalRoom.userData.Cube = child;
+      }
+      if (child.name === "Cube001") {
+        personalRoom.userData.Cube001 = child;
+      }
     });
 
     let frameCount = 1;
+    let bodyYPos = 0;
+    function handleScroll(event: any) {
+      bodyYPos = event.target.body.getBoundingClientRect().top;
+    }
+    document.body.onscroll = handleScroll;
+
     animate();
     function animate() {
       renderer.render(scene, camera);
@@ -47,10 +59,11 @@ export async function setupThreeJSScene(): Promise<void> {
         animatePersonalRoom(personalRoom);
       }
       frameCount++;
-      console.log(frameCount);
     }
     function animatePersonalRoom(personalRoom: Object3D) {
       personalRoom.userData.chair.rotation.y = Math.sin(frameCount / 50);
+      personalRoom.userData.Cube.rotation.z = 1 + bodyYPos / 120;
+      personalRoom.userData.Cube001.rotation.z = bodyYPos / 1200;
     }
   }
 }

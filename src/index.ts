@@ -23,13 +23,19 @@ export async function setupThreeJSScene(): Promise<void> {
   setupOrbitControls(camera, renderer.domElement);
 
   //Load a model and add it to the scene!
-  const submarine = await loadModel("./assets/roomwebsite.glb");
-  if (submarine) {
-    scene.add(submarine);
-    submarine.scale.set(2, 2, 2);
+  const personalRoom = await loadModel("./assets/roomwebsite.glb");
+  if (personalRoom) {
+    scene.add(personalRoom);
+    personalRoom.scale.set(2, 2, 2);
 
     //Optional: See in console what the model / scene consists of
-    dumpObjectToConsoleAsString(submarine);
+    dumpObjectToConsoleAsString(personalRoom);
+
+    personalRoom.traverse((child) => {
+      if (child.name === "chair") {
+        personalRoom.userData.chair = child;
+      }
+    });
 
     animate();
 

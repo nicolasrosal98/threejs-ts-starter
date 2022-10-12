@@ -7,7 +7,11 @@ import { setupLights } from "./setupLights";
 // import { setupOrbitControls } from "./setupOrbitControls";
 import { setupRenderer } from "./setupRenderer";
 
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
+
 export async function setupThreeJSScene(): Promise<void> {
+  const gui = new GUI();
+
   const dimensions = { w: window.innerWidth, h: window.innerHeight };
 
   const camera = setupCamera(dimensions);
@@ -51,7 +55,10 @@ export async function setupThreeJSScene(): Promise<void> {
     }
     document.body.onscroll = handleScroll;
 
+    gui.add(personalRoom.userData.chair.position, "y", -50, 50);
+
     animate();
+
     function animate() {
       renderer.render(scene, camera);
       requestAnimationFrame(animate);

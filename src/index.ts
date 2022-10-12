@@ -28,7 +28,6 @@ export async function setupThreeJSScene(): Promise<void> {
   if (personalRoom) {
     scene.add(personalRoom);
     personalRoom.scale.set(2, 2, 2);
-    personalRoom.position.set(7, 3, -1);
 
     //Optional: See in console what the model / scene consists of
     dumpObjectToConsoleAsString(personalRoom);

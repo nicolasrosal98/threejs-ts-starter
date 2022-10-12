@@ -1,8 +1,8 @@
-import { Object3D, Scene, Color } from "three";
+import { Object3D, Scene, Color, Vector3 } from "three";
 import { dumpObjectToConsoleAsString } from "./debugModel";
 import { loadModel } from "./loadModel";
 import { setupCamera } from "./setupCamera";
-// import { setupHelpers } from "./setupHelpers";
+import { setupHelpers } from "./setupHelpers";
 import { setupLights } from "./setupLights";
 // import { setupOrbitControls } from "./setupOrbitControls";
 import { setupRenderer } from "./setupRenderer";
@@ -13,8 +13,10 @@ export async function setupThreeJSScene(): Promise<void> {
   const gui = new GUI();
 
   const dimensions = { w: window.innerWidth, h: window.innerHeight };
+  const cameraInitTarget = new Vector3(-3, 1, 0);
+  const cameraEndPos = new Vector3(4.34, 3.12, 3.36);
 
-  const camera = setupCamera(dimensions);
+  const camera = setupCamera(dimensions, cameraInitTarget);
 
   const renderer = setupRenderer(camera, dimensions);
 
@@ -23,7 +25,7 @@ export async function setupThreeJSScene(): Promise<void> {
 
   setupLights(scene);
 
-  // setupHelpers(scene);
+  const helpers = setupHelpers(scene);
 
   // setupOrbitControls(camera, renderer.domElement);
 
@@ -55,17 +57,34 @@ export async function setupThreeJSScene(): Promise<void> {
     }
     document.body.onscroll = handleScroll;
 
-    gui.add(personalRoom.userData.chair.position, "y", -50, 50);
+    const commands = {
+      logCamPos: () => console.log(camera.position),
+      lerpCamPos: () => camera.position.lerp(cameraEndPos, 0.5),
+    };
+
+    gui
+      .add(personalRoom.userData.chair.position, "y", -50, 50)
+      .name("Chair Y Position");
+    gui.add(helpers.axesHelper, "visible").name("axesHelper");
+    gui.add(helpers.gridHelper, "visible").name("gridHelper");
+    gui.add(camera.position, "x", -10, 10).name("Camera X Position");
+    gui.add(camera.position, "y", -10, 10).name("Camera Y Position");
+    gui.add(camera.position, "z", -10, 10).name("Camera Z Position");
+    gui.add(camera.rotation, "y", -10, 10).name("Camera Y Rotation");
+    gui.add(commands, "logCamPos");
+    gui.add(commands, "lerpCamPos");
 
     animate();
 
     function animate() {
-      renderer.render(scene, camera);
       requestAnimationFrame(animate);
 
       if (personalRoom) {
         animatePersonalRoom(personalRoom);
+        // camera.lookAt(personalRoom.userData.chair.position);
       }
+
+      renderer.render(scene, camera);
       frameCount++;
     }
     function animatePersonalRoom(personalRoom: Object3D) {

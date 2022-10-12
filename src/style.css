@@ -25,6 +25,6 @@ canvas {
 /* Then color the appropriate divs blue */
 .content div:nth-child(4n+1),
 .content div:nth-child(4n) {
-    background: white;
+    background: rgba(255, 255, 255, 0.237);
     color: #FB9039;
 }

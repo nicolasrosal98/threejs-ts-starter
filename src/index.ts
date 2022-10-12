@@ -1,10 +1,10 @@
-import { Object3D, Scene } from "three";
+import { Object3D, Scene, Color } from "three";
 import { dumpObjectToConsoleAsString } from "./debugModel";
 import { loadModel } from "./loadModel";
 import { setupCamera } from "./setupCamera";
-import { setupHelpers } from "./setupHelpers";
+// import { setupHelpers } from "./setupHelpers";
 import { setupLights } from "./setupLights";
-import { setupOrbitControls } from "./setupOrbitControls";
+// import { setupOrbitControls } from "./setupOrbitControls";
 import { setupRenderer } from "./setupRenderer";
 
 export async function setupThreeJSScene(): Promise<void> {
@@ -15,10 +15,11 @@ export async function setupThreeJSScene(): Promise<void> {
   const renderer = setupRenderer(camera, dimensions);
 
   const scene = new Scene();
+  scene.background = new Color(0xe1f2f7);
 
   setupLights(scene);
 
-  setupHelpers(scene);
+  // setupHelpers(scene);
 
   // setupOrbitControls(camera, renderer.domElement);
 

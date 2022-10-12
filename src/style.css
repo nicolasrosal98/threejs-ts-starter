@@ -26,4 +26,5 @@ canvas {
 .content div:nth-child(4n+1),
 .content div:nth-child(4n) {
     background: white;
+    color: #FB9039;
 }

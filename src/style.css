@@ -28,3 +28,9 @@ canvas {
     background: rgba(255, 255, 255, 0.237);
     color: #FB9039;
 }
+
+#floatInfo {
+    position: fixed;
+    bottom: 200px;
+    right: 200px;
+}

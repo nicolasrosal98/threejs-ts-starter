@@ -8,6 +8,7 @@ import { setupLights } from "./setupLights";
 import { setupRenderer } from "./setupRenderer";
 
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
+import { mapLinear } from "three/src/math/MathUtils";
 
 export async function setupThreeJSScene(): Promise<void> {
   const gui = new GUI();
@@ -54,6 +55,8 @@ export async function setupThreeJSScene(): Promise<void> {
     let bodyYPos = 0;
     function handleScroll(event: any) {
       bodyYPos = event.target.body.getBoundingClientRect().top;
+      document.getElementById("floatInfo")!.innerText = bodyYPos.toString();
+      console.log(bodyYPos);
     }
     document.body.onscroll = handleScroll;
 
@@ -82,6 +85,11 @@ export async function setupThreeJSScene(): Promise<void> {
       if (personalRoom) {
         animatePersonalRoom(personalRoom);
         // camera.lookAt(personalRoom.userData.chair.position);
+      }
+
+      if (bodyYPos < -300) {
+        const fraq = mapLinear(bodyYPos, -344, -700, 0, 1);
+        camera.position.copy(cameraInitTarget.clone().lerp(cameraEndPos, fraq));
       }
 
       renderer.render(scene, camera);
